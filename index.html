@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>백지현 전역 카운트다운</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="timer">
+        <h1>🪖백지현 전역 카운트다운🫡</h1>
+        <div class="container">
+            <h2>입대일: <br>2024년 12월 5일</h2>
+            <img src="bbakbbakbaek.jpg" alt="빡빡이 백지현" class="timer-image">
+            <h2>전역일: <br>2026년 6월 1일</h2>
+        </div>
+        <h2>전역까지...</h2>
+        <div class="timer-container">
+            <div class="timer-item">
+                <span id="days">0</span>
+                <p>일</p>
+            </div>
+            <div class="timer-item">
+                <span id="hours">0</span>
+                <p>시간</p>
+            </div>
+            <div class="timer-item">
+                <span id="minutes">0</span>
+                <p>분</p>
+            </div>
+            <div class="timer-item">
+                <span id="seconds">0</span>
+                <p>초</p>
+            </div>
+        </div>
+        
+        <div class="timer-container">
+            <div class="timer-item">
+                <span id="totalHours">0</span>
+                <p>시간 뒤 전역</p>
+            </div>
+            <div class="timer-item">
+                <span id="totalMinutes">0</span>
+                <p>분 뒤 전역</p>
+            </div>
+            <div class="timer-item">
+                <span id="totalSeconds">0</span>
+                <p>초 뒤 전역</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateTimer() {
+            const endDate = new Date('2026-06-01T00:00:00');
+            const currentDate = new Date();
+
+            let yearDiff = endDate.getFullYear() - currentDate.getFullYear();
+            let monthDiff = endDate.getMonth() - currentDate.getMonth();
+            let dayDiff = endDate.getDate() - currentDate.getDate();
+            let hourDiff = endDate.getHours() - currentDate.getHours();
+            let minuteDiff = endDate.getMinutes() - currentDate.getMinutes();
+            let secondDiff = endDate.getSeconds() - currentDate.getSeconds();
+
+            if (secondDiff < 0) {
+                secondDiff = 60 + secondDiff;
+                minuteDiff--;
+            }
+            if (minuteDiff < 0) {
+                minuteDiff = 60 + minuteDiff;
+                hourDiff--;
+            }
+            if (hourDiff < 0) {
+                hourDiff = 24 + hourDiff;
+                dayDiff--;
+            }
+            if (dayDiff < 0) {
+                const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+                dayDiff = lastDay + dayDiff;
+                monthDiff--;
+            }
+            if (monthDiff < 0) {
+                monthDiff = 12 + monthDiff;
+                yearDiff--;
+            }
+
+            const totalDays = yearDiff * 365 + monthDiff * 30 + dayDiff;
+            const totalHours = totalDays * 24 + hourDiff;
+            const totalMinutes = totalHours * 60 + minuteDiff;
+            const totalSeconds = totalMinutes * 60 + secondDiff;
+
+            document.getElementById('days').textContent = totalDays;
+            document.getElementById('hours').textContent = hourDiff;
+            document.getElementById('minutes').textContent = minuteDiff;
+            document.getElementById('seconds').textContent = secondDiff;
+            document.getElementById('totalHours').textContent = totalHours;
+            document.getElementById('totalMinutes').textContent = totalMinutes;
+            document.getElementById('totalSeconds').textContent = totalSeconds;
+        }
+
+        // 1초마다 타이머 업데이트
+        setInterval(updateTimer, 1000);
+        // 페이지 로드 시 즉시 실행
+        updateTimer();
+    </script>
+</body>
+</html>
